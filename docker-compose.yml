@@ -1,0 +1,19 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    ports:
+      - "5678:5678"
+    environment:
+      - GENERIC_TIMEZONE=America/Sao_Paulo
+      - TZ=America/Sao_Paulo
+      # Permite que os nós leiam $env.OPENWEATHER_API_KEY
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
+      # Chave da OpenWeather, lida do arquivo .env (não versionado)
+      - OPENWEATHER_API_KEY=${OPENWEATHER_API_KEY}
+      # URL pública HTTPS (ex.: ngrok) exigida pelo Telegram Trigger
+      - WEBHOOK_URL=${WEBHOOK_URL}
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
